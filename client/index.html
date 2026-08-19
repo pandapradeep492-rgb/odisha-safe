@@ -22,6 +22,51 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!--
+      Fallback shown ONLY if the app is opened incorrectly (e.g. via VS Code
+      "Live Server" at http://127.0.0.1:5500/client/index.html) instead of the
+      Vite dev server. In that case the module script below cannot be compiled
+      and #root stays empty. This message keeps the screen from being blank and
+      tells the user exactly how to run the project. When Vite serves the app,
+      React mounts into #root and replaces this message instantly.
+    -->
+    <noscript>
+      <div style="font-family: system-ui, sans-serif; padding: 24px; text-align: center;">
+        ODISHA SAFE needs JavaScript enabled to run.
+      </div>
+    </noscript>
+
+    <div id="osafe-boot-hint" style="
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      max-width: 640px; margin: 8vh auto; padding: 28px; text-align: center;
+      color: #1e293b;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;
+        width:56px;height:56px;border-radius:14px;background:#1f5ce6;color:#fff;
+        font-size:26px;margin-bottom:16px;">🛡️</div>
+      <h1 style="font-size:22px;margin:0 0 6px;">ODISHA SAFE</h1>
+      <p style="margin:0 0 4px;color:#475569;">Smart Disaster Management &amp; Emergency Response</p>
+      <p style="margin:0 0 18px;font-size:12px;color:#f59e0b;font-weight:600;">
+        College Project Prototype — Demo Data
+      </p>
+      <div style="background:#fef3c7;border:1px solid #fcd34d;border-radius:10px;
+        padding:14px 16px;color:#92400e;font-size:14px;text-align:left;">
+        <strong>Loading the app…</strong>
+        <p style="margin:8px 0 0;">
+          If this message doesn't disappear, the project was opened the wrong way.
+          This is a <strong>React + Vite</strong> app and cannot be opened as a plain
+          HTML file (e.g. with VS Code <em>Live Server</em> at
+          <code>127.0.0.1:5500</code>).
+        </p>
+        <p style="margin:8px 0 0;">Run it from a terminal instead:</p>
+        <pre style="margin:8px 0 0;background:#1e293b;color:#e2e8f0;padding:10px;
+          border-radius:8px;overflow:auto;font-size:12px;">cd client
+npm install
+npm run dev</pre>
+        <p style="margin:8px 0 0;">Then open <strong>http://localhost:5173</strong></p>
+      </div>
+    </div>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

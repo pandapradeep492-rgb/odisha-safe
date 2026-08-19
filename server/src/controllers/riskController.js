@@ -1,5 +1,7 @@
 import RiskPrediction from '../models/RiskPrediction.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
+import { isDbConnected } from '../config/db.js';
+
 
 const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
 
@@ -65,18 +67,24 @@ export function computeRuleBasedRisk(input = {}) {
 export const predictRisk = asyncHandler(async (req, res) => {
   const result = computeRuleBasedRisk(req.body);
 
-  // Best-effort audit log (ignore failures so predictions always return).
-  try {
-    await RiskPrediction.create({
-      input: req.body,
-      score: result.score,
-      level: result.level,
-      action: result.action,
-      model: result.model,
-    });
-  } catch {
-    /* non-fatal */
+  // Best-effort audit log. Only attempt the write when the DB is actually
+  // connected — otherwise (demo mode) the write would fail/hang, so we skip it.
+  // Command buffering is disabled globally, but this extra guard keeps the
+  // handler completely decoupled from DB availability.
+  if (isDbConnected()) {
+    try {
+      await RiskPrediction.create({
+        input: req.body,
+        score: result.score,
+        level: result.level,
+        action: result.action,
+        model: result.model,
+      });
+    } catch {
+      /* non-fatal: prediction still returns */
+    }
   }
 
   res.json(result);
 });
+

@@ -42,10 +42,18 @@ export function createApp() {
   });
   app.use('/api', limiter);
 
-  // Health check.
+  // Health check. `success` + `message` fields make it easy for the frontend
+  // to detect backend availability; `db`/`demoMode` clarify data source.
   app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', db: dbState() === 1 ? 'connected' : 'disconnected' });
+    const connected = dbState() === 1;
+    res.json({
+      success: true,
+      message: 'ODISHA SAFE API is running',
+      db: connected ? 'connected' : 'disconnected',
+      demoMode: !connected,
+    });
   });
+
 
   // API routes.
   app.use('/api', routes);
