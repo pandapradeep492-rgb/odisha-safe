@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   ODISHA SAFE — global base styles
+   ============================================================ */
+@layer base {
+  :root {
+    --header-height: 4rem;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  /* Visible focus states for keyboard users (accessibility). */
+  :focus-visible {
+    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-white;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-semibold tracking-tight text-slate-900;
+  }
+}
+
+@layer components {
+  /* Standard page container with responsive gutters. */
+  .container-page {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Reusable card surface. */
+  .card {
+    @apply rounded-xl border border-slate-200 bg-white shadow-card;
+  }
+
+  /* Primary / secondary / danger buttons. */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition
+      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 focus-visible:ring-brand-500;
+  }
+  .btn-secondary {
+    @apply btn border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 focus-visible:ring-brand-500;
+  }
+  .btn-danger {
+    @apply btn bg-risk-critical text-white hover:bg-red-700 focus-visible:ring-red-500;
+  }
+  .btn-ghost {
+    @apply btn text-slate-600 hover:bg-slate-100 focus-visible:ring-brand-500;
+  }
+
+  /* Form controls. */
+  .form-label {
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
+  }
+  .form-input,
+  .form-select,
+  .form-textarea {
+    @apply w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm
+      transition placeholder:text-slate-400 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30;
+  }
+
+  /* Section eyebrow label. */
+  .eyebrow {
+    @apply inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-brand-700;
+  }
+}
+
+/* ============================================================
+   Leaflet map sizing helpers
+   ============================================================ */
+.leaflet-container {
+  font-family: inherit;
+  z-index: 0;
+}
+
+/* Prevent the map controls from overlapping our sticky navbar. */
+.leaflet-top {
+  z-index: 400;
+}
+
+/* Custom scrollbar for a more polished feel on desktop. */
+@media (min-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-400;
+  }
+}
